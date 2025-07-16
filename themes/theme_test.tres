@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://gn116784ml00"]
+
+[ext_resource type="FontFile" uid="uid://dyacx171h2egm" path="res://assets/font/bianzhidai_COLR-back.otf" id="1_khr8a"]
+
+[resource]
+default_font = ExtResource("1_khr8a")
+default_font_size = 24
