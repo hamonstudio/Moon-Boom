@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://c0g502b8l4hdg"]
+[gd_scene load_steps=89 format=3 uid="uid://c0g502b8l4hdg"]
 
 [ext_resource type="Material" uid="uid://c8nbgylh6wuin" path="res://test/test.tres" id="1_2taud"]
 [ext_resource type="Script" uid="uid://cmjntqlamtvtc" path="res://test/camera_light.gd" id="1_kjbjw"]
@@ -21,12 +21,33 @@
 [ext_resource type="Material" uid="uid://bix2ojrvgpgi0" path="res://test/mat_cloud_belt.tres" id="12_fq5i5"]
 [ext_resource type="ArrayMesh" uid="uid://bmn8v1tmokcxq" path="res://assets/placeholder/player/placeholder_ship_pear.obj" id="12_ippds"]
 [ext_resource type="ArrayMesh" uid="uid://deinwhlbqylhj" path="res://assets/placeholder/player/placeholder_ship_pear_glass.obj" id="13_6kgsm"]
+[ext_resource type="Curve" uid="uid://m2h2am2jfkci" path="res://test/grip_curve_test.tres" id="15_xfr2n"]
 [ext_resource type="ArrayMesh" uid="uid://dvcow2oq67qd4" path="res://assets/placeholder/player/placeholder_pear_arm.obj" id="17_kjbjw"]
 [ext_resource type="ArrayMesh" uid="uid://vlyrgg41lxoe" path="res://assets/placeholder/player/placeholder_pear_leg.obj" id="18_gif24"]
+[ext_resource type="Material" uid="uid://yy44rgrn1ln4" path="res://test/mat_test_glass_drift.tres" id="18_kjbjw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_03tek"]
 friction = 0.0
 bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_vioa0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.330882, 0.269663), -1.05056, -1.05056, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vyx0x"]
+curve = SubResource("Curve_vioa0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xfr2n"]
+gravity = Vector3(0, 0, 0)
+emission_curve = SubResource("CurveTexture_vyx0x")
+
+[sub_resource type="Curve" id="Curve_gif24"]
+_data = [Vector2(0, 0), 0.0, 2.54831, 0, 0, Vector2(0.488095, 0.651685), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.18539, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_vioa0"]
+material = ExtResource("18_kjbjw")
+curve = SubResource("Curve_gif24")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_7a0fn"]
 noise_type = 5
@@ -165,7 +186,7 @@ friction = 0.2
 bounce = 0.2
 
 [sub_resource type="Curve" id="Curve_l3rq6"]
-_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0, Vector2(0.3, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.1), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 0.7), -0.369961, -0.369961, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
 point_count = 4
 metadata/_snap_enabled = true
 
@@ -178,6 +199,88 @@ material = ExtResource("4_nyjl6")
 radius = 0.25
 height = 0.75
 radial_segments = 12
+
+[sub_resource type="Curve" id="Curve_kjbjw"]
+_data = [Vector2(0, 0), 0.0, 3.14607, 0, 0, Vector2(0.488095, 0.550562), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.39775, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_wh8bs"]
+offsets = PackedFloat32Array(0, 0.111111, 0.261905, 0.492063, 0.698413, 0.880952, 1)
+colors = PackedColorArray(0.403922, 0.321569, 0.635294, 1, 0.67451, 0.211765, 0.47451, 1, 0.941176, 0.317647, 0.462745, 1, 0.941176, 0.564706, 0.215686, 1, 0.368627, 0.733333, 0.341176, 1, 0.0627451, 0.533333, 0.764706, 1, 0.403922, 0.321569, 0.635294, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ndjvy"]
+gradient = SubResource("Gradient_wh8bs")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+repeat = 2
+
+[sub_resource type="Gradient" id="Gradient_2uy4l"]
+offsets = PackedFloat32Array(0.829545, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hxft1"]
+noise_type = 5
+frequency = 1.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fwxac"]
+seamless = true
+color_ramp = SubResource("Gradient_2uy4l")
+noise = SubResource("FastNoiseLite_hxft1")
+
+[sub_resource type="Gradient" id="Gradient_7rmou"]
+offsets = PackedFloat32Array(0.95082, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_12q2b"]
+noise_type = 5
+frequency = 1.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r6eil"]
+color_ramp = SubResource("Gradient_7rmou")
+noise = SubResource("FastNoiseLite_12q2b")
+
+[sub_resource type="Gradient" id="Gradient_iy83x"]
+offsets = PackedFloat32Array(0, 0.111111, 0.261905, 0.492063, 0.698413, 0.880952, 1)
+colors = PackedColorArray(0.403922, 0.321569, 0.635294, 1, 0.67451, 0.211765, 0.47451, 1, 0.941176, 0.317647, 0.462745, 1, 0.941176, 0.564706, 0.215686, 1, 0.368627, 0.733333, 0.341176, 1, 0.0627451, 0.533333, 0.764706, 1, 0.403922, 0.321569, 0.635294, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_paghj"]
+gradient = SubResource("Gradient_iy83x")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+repeat = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vyx0x"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 1, 1, 0.0156863)
+albedo_texture = SubResource("GradientTexture2D_ndjvy")
+metallic_specular = 0.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+emission_texture = SubResource("GradientTexture2D_paghj")
+rim_tint = 0.0
+clearcoat = 0.01
+clearcoat_roughness = 0.3
+clearcoat_texture = SubResource("NoiseTexture2D_fwxac")
+anisotropy = 1.0
+heightmap_scale = 16.0
+subsurf_scatter_strength = 1.0
+subsurf_scatter_skin_mode = true
+backlight = Color(1, 1, 1, 1)
+detail_mask = SubResource("NoiseTexture2D_r6eil")
+detail_blend_mode = 1
+disable_receive_shadows = true
+shadow_to_opacity = true
+grow_amount = 0.29
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_gif24"]
+material = SubResource("StandardMaterial3D_vyx0x")
+curve = SubResource("Curve_kjbjw")
 
 [sub_resource type="TorusMesh" id="TorusMesh_cn81f"]
 material = ExtResource("12_fq5i5")
@@ -316,7 +419,7 @@ script = ExtResource("1_kjbjw")
 player = NodePath("../SHIP_RAYCAST")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Camera_Light"]
-transform = Transform3D(1, 0, 0, 0, 0.0625473, 0.998042, 0, -0.998042, 0.0625473, 0, 66.3479, 4.97156)
+transform = Transform3D(0.995697, -0.00579601, -0.0924846, 0.0914317, 0.223802, 0.970337, 0.0150741, -0.974617, 0.223369, -5.9867, 66.3479, 16.4024)
 light_energy = 4.0
 light_size = 1.0
 light_specular = 16.0
@@ -332,7 +435,8 @@ spring_length = 15.0
 margin = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="Camera_Light/Camera_Spring_Arm"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 80)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 58.5686, 56.5686)
+top_level = true
 environment = ExtResource("2_7yo6o")
 doppler_tracking = 2
 projection = 1
@@ -351,6 +455,14 @@ camera = NodePath("../Camera_Light/Camera_Spring_Arm/Camera3D")
 
 [node name="AIM_PIVOT" type="Node3D" parent="SHIP_AIM_ROTATION"]
 unique_name_in_owner = true
+
+[node name="GPUParticles3DRL2" type="GPUParticles3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.085, 1.27)
+amount = 120
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
 
 [node name="PlaceholderPearArm_L" type="MeshInstance3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
 transform = Transform3D(1, 8.74228e-08, 0, -4.37114e-08, 0.5, 0.866025, -7.57104e-08, 0.866025, -0.5, -1.25, -0.25, 0.5)
@@ -420,6 +532,7 @@ script = ExtResource("9_l3rq6")
 spring_strength = 6000.0
 spring_damping = 120.0
 over_extend = 0.1
+grip_curve = ExtResource("15_xfr2n")
 
 [node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FL"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, -0.494475, 0.00552487)
@@ -439,6 +552,7 @@ script = ExtResource("9_l3rq6")
 spring_strength = 6000.0
 spring_damping = 120.0
 over_extend = 0.1
+grip_curve = ExtResource("15_xfr2n")
 
 [node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FR"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, -0.5, 0)
@@ -446,7 +560,7 @@ material_override = ExtResource("4_nyjl6")
 mesh = SubResource("CapsuleMesh_vd4mf")
 
 [node name="PlaceholderPearLeg_R" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FR/WHEEL"]
-transform = Transform3D(-1.5, 1.54618e-07, 2.18776e-07, 9.27258e-08, 1.44889, -0.388228, -2.5134e-07, -0.388228, -1.44889, -0.25, -0.75, 0.608)
+transform = Transform3D(-1.5, 1.54618e-07, 2.18776e-07, 9.27258e-08, 1.44889, -0.388228, -2.5134e-07, -0.388228, -1.44889, -0.25, -0.75, 0.5)
 material_override = ExtResource("4_kjwn4")
 mesh = ExtResource("18_gif24")
 skeleton = NodePath("../../../WHEEL_RR")
@@ -461,10 +575,33 @@ rest_dist = 0.75
 over_extend = 0.1
 wheel_radius = 0.75
 is_motor = true
+grip_curve = ExtResource("15_xfr2n")
 
 [node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_RL"]
 transform = Transform3D(1.5, 0, 0, 0, 1.06066, 1.06066, 0, -1.06066, 1.06066, 0, -0.5, 0)
 mesh = SubResource("CapsuleMesh_vd4mf")
+
+[node name="GPUParticles3DDRIFTL" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RL/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, 0.166667, -0.635713, -0.494292)
+emitting = false
+amount = 120
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
+
+[node name="GPUParticles3DENGINEL" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RL/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, 0.15, -0.765895, -0.360895)
+emitting = false
+amount = 120
+lifetime = 0.1
+explosiveness = 0.1
+randomness = 0.05
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_gif24")
 
 [node name="WHEEL_RR" type="RayCast3D" parent="SHIP_RAYCAST"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
@@ -476,11 +613,34 @@ rest_dist = 0.75
 over_extend = 0.1
 wheel_radius = 0.75
 is_motor = true
+grip_curve = ExtResource("15_xfr2n")
 
 [node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_RR"]
 transform = Transform3D(1.5, 0, 0, 0, 1.06066, 1.06066, 0, -1.06066, 1.06066, 0, -0.5, 0)
 material_override = ExtResource("4_nyjl6")
 mesh = SubResource("CapsuleMesh_vd4mf")
+
+[node name="GPUParticles3DDRIFTR" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RR/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, -0.167, -0.635895, -0.493895)
+emitting = false
+amount = 120
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
+
+[node name="GPUParticles3DENGINER" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RR/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, -0.15, -0.765895, -0.360895)
+emitting = false
+amount = 120
+lifetime = 0.1
+explosiveness = 0.1
+randomness = 0.05
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_gif24")
 
 [node name="RING" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.99583, -0.00293407, -0.158289, 0.000284251, 2.99958, -0.0502095, 0.158316, 0.0501241, 2.9954, 13.9831, -8.40205, 0.288315)

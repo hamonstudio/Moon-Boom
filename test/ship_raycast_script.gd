@@ -2,23 +2,33 @@ extends RigidBody3D
 
 @export var wheels: Array[RaycastWheel]
 @export var acceleration := 3200.0
-@export var max_speed := 24.0
+@export var max_speed := 16.0
 @export var accel_curve : Curve
-@export var tire_turn_speed := 1.5
+@export var tire_turn_speed := 1.0
 @export var tire_max_turn_degrees := 30
-@export var tire_back_turn_speed := 0.5
-@export var tire_back_max_turn_degrees := 5
+@export var tire_back_turn_speed := 0.25
+@export var tire_back_max_turn_degrees := 2
 @export var aim_turn_speed := 30
 
+@onready var particle_drift_r = %GPUParticles3DDRIFTR
+@onready var particle_drift_l = %GPUParticles3DDRIFTL
+@onready var particle_engine_r = %GPUParticles3DENGINER
+@onready var particle_engine_l = %GPUParticles3DENGINEL
+
+
 var motor_input := 0
+var drift := false
+var is_drifting := false
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
-# Mouse input variables
-var MOUSE_SENSITIVITY := 0.001
-var MOUSE_HORIZONTAL := 0.0
-var MOUSE_VERTICAL := 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
-	
+	#handles drift hand break
+	if event.is_action_pressed("drift"):
+		drift = true
+		is_drifting = true
+	elif event.is_action_released("drift"):
+		drift = false
+
 	# handles Acceleration
 	if event.is_action_pressed("click_left"):
 		motor_input = 1
@@ -44,21 +54,17 @@ func _basic_steering_rotation(delta: float) -> void:
 		deg_to_rad(-tire_back_max_turn_degrees), deg_to_rad(tire_back_max_turn_degrees))
 		$WHEEL_RL.rotation.y = clampf($WHEEL_RL.rotation.y + turn_input_back * delta,
 		deg_to_rad(-tire_back_max_turn_degrees), deg_to_rad(tire_back_max_turn_degrees))
-		#Ship cabin animation on move left/right motion — WORKING
-		#SHIP_AIM.rotation.y = clampf(SHIP_AIM.rotation.y - motor_input * delta, deg_to_rad(-15.0), deg_to_rad(15.0))
 	else:
 		$WHEEL_FR.rotation.y = move_toward($WHEEL_FR.rotation.y, 0, tire_max_turn_degrees * delta / 40)
 		$WHEEL_FL.rotation.y = move_toward($WHEEL_FL.rotation.y, 0, tire_max_turn_degrees * delta / 40)
 		$WHEEL_RR.rotation.y = move_toward($WHEEL_RR.rotation.y, 0, tire_back_max_turn_degrees * delta / 60)
 		$WHEEL_RL.rotation.y = move_toward($WHEEL_RL.rotation.y, 0, tire_back_max_turn_degrees * delta / 60)
-		#Ship cabin animation on move left/right motion — WORKING
-		#SHIP_AIM.rotation.y = move_toward(SHIP_AIM.rotation.y, 0, delta)
 
 
 func _physics_process(_delta: float) -> void:
 	_basic_steering_rotation(_delta)
-
 	var grounded := false
+	
 	for wheel in wheels:
 		if wheel.is_colliding():
 			grounded = true
@@ -76,13 +82,30 @@ func _physics_process(_delta: float) -> void:
 func _get_point_velocity(point: Vector3) -> Vector3:
 	return linear_velocity + angular_velocity.cross(point - global_position)
 
-func _do_single_wheel_traction(ray: RaycastWheel) -> void:
+func _do_single_wheel_traction(ray: RaycastWheel) -> void: 
 	if not ray.is_colliding(): return
 	
 	var steer_side_dir := ray.global_basis.x
 	var tire_vel := _get_point_velocity(ray.wheel.global_position)
 	var steering_x_vel := steer_side_dir.dot(tire_vel)
-	var x_traction := 0.2
+	
+	var grip_factor := absf(steering_x_vel/tire_vel.length())
+	var x_traction := ray.grip_curve.sample_baked(grip_factor)
+	
+
+	if not drift and grip_factor < 0.2:
+		is_drifting = false
+		particle_drift_r.emitting = false
+		particle_drift_l.emitting = false
+
+	if drift:
+		x_traction = 0.08
+		if not particle_drift_r.emitting:
+			particle_drift_r.emitting = true
+			particle_drift_l.emitting = true
+	elif is_drifting:
+		x_traction = 0.2
+
 	var x_force := -steer_side_dir * steering_x_vel * x_traction * ((mass*gravity)/2.0)
 	
 	var force_pos := ray.wheel.global_position- global_position
@@ -101,6 +124,12 @@ func _do_single_wheel_acceleration(ray: RaycastWheel) -> void:
 			var ac := accel_curve.sample_baked(speed_ratio)
 			var force_vector := forward_dir * acceleration * motor_input * ac
 			apply_force(force_vector, force_pos)
+			
+			particle_engine_r.emitting = true
+			particle_engine_l.emitting = true
+		else:
+			particle_engine_r.emitting = false
+			particle_engine_l.emitting = false
 
 func _do_single_wheel_suspension(ray: RaycastWheel) -> void:
 	if ray.is_colliding():
@@ -108,7 +137,7 @@ func _do_single_wheel_suspension(ray: RaycastWheel) -> void:
 		ray.target_position.y = -(ray.rest_dist + ray.wheel_radius + ray.over_extend)
 		var contact := ray.get_collision_point()
 		var spring_up_dir := ray.global_transform.basis.y
-		var spring_len := ray.global_position.distance_to(contact)
+		var spring_len := maxf(0.0, ray.global_position.distance_to(contact))
 		var offset := ray.rest_dist - spring_len
 		
 		ray.wheel.position.y = -spring_len

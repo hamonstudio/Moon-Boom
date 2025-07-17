@@ -52,7 +52,7 @@ color_ramp = SubResource("Gradient_6kgsm")
 noise = SubResource("FastNoiseLite_xfr2n")
 
 [sub_resource type="Gradient" id="Gradient_sbpbe"]
-offsets = PackedFloat32Array(0.890805, 1)
+offsets = PackedFloat32Array(0.311475, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g65km"]
 noise_type = 5
@@ -72,13 +72,16 @@ color_ramp = SubResource("Gradient_sbpbe")
 noise = SubResource("FastNoiseLite_g65km")
 
 [resource]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
 blend_mode = 1
 cull_mode = 2
 specular_mode = 1
 albedo_texture = SubResource("GradientTexture2D_ippds")
 metallic_specular = 0.01
 metallic_texture = SubResource("NoiseTexture2D_kjbjw")
-roughness = 0.03
+roughness = 0.01
 roughness_texture = SubResource("NoiseTexture2D_or5rb")
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.1
