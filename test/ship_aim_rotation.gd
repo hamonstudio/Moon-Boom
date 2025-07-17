@@ -7,7 +7,6 @@ extends RigidBody3D
 @export_range(0.0, 1.0) var mouse_sensitivity := 0.25
 
 @onready var _is_mouse_active := true
-@onready var mouse_tracker = %MOUSE_TRACKER
 @onready var aim_pivot = %AIM_PIVOT
 
 var mouse_aim_dir := Vector2.ZERO
@@ -33,17 +32,18 @@ func _process(_delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _mouse_aiming(delta: float) -> void:
-	aim_pivot.rotation.y = move_toward(mouse_tracker.rotation.y, mouse_tracker.rotation.y, aiming_speed * delta * 10000)
+	aim_pivot.rotation.y = lerp_angle(aim_pivot.rotation.y, mouse_aim_angle.y, aiming_speed * delta )
 
 func _joy_aiming(delta: float) -> void:
 	if joy_aim_dir.length() > 0.2:
-		rotation.y = move_toward(rotation.y, joy_aim_angle.y, aiming_speed * delta )
+		aim_pivot.rotation.y = lerp_angle(aim_pivot.rotation.y, joy_aim_angle.y, aiming_speed * delta )
 		#print ("JOYSTICK aiming at: ",joy_aim_dir)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
+		_is_mouse_active = true
 		# Containing mouse cursor
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE and Input.is_action_just_pressed("click_left"):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
@@ -61,10 +61,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 			if !mouse_ray_result.is_empty():
 				if mouse_ray_result.collider != self:
-					var mouse_ray_target_pos = mouse_ray_result.position
+					var mouse_ray_target_pos = mouse_ray_result.position - global_position
 					mouse_ray_target_pos.y += 2  # Adjust to point a couple meters above the hit point
-					mouse_tracker.look_at(mouse_ray_target_pos)
-					print ("MOUSE aiming at: ",mouse_ray_target_pos)
+					mouse_ray_target_pos.x = mouse_ray_target_pos.x * mouse_sensitivity
+					mouse_ray_target_pos.z = mouse_ray_target_pos.z * mouse_sensitivity
+					mouse_aim_dir = Vector2( mouse_ray_target_pos.z, mouse_ray_target_pos.x)
+					mouse_aim_dir *= -1.0
+					if mouse_aim_dir.length() > 0.2:
+						mouse_aim_angle = Basis(Vector3(0.0,1.0,0.0), mouse_aim_dir.angle()).get_euler()
 
 		# Get the Joystick aim input direction and handle the Joystick aiming.
 	elif event is InputEventJoypadMotion:
