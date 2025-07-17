@@ -32,7 +32,9 @@ func _process(_delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _mouse_aiming(delta: float) -> void:
-	aim_pivot.rotation.y = lerp_angle(aim_pivot.rotation.y, mouse_aim_angle.y, aiming_speed * delta )
+	if mouse_aim_dir.length() > 0.2:
+		aim_pivot.rotation.y = lerp_angle(aim_pivot.rotation.y, mouse_aim_angle.y, aiming_speed * delta )
+		#print ("MOUSE aiming at: ",mouse_aim_dir)
 
 func _joy_aiming(delta: float) -> void:
 	if joy_aim_dir.length() > 0.2:
