@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://hx4i3wwk0h7p"]
+
+[ext_resource type="Script" uid="uid://01fmvdypdexg" path="res://test/script/projectile_laucher.gd" id="1_3fqvw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3fqvw"]
+top_radius = 0.0
+bottom_radius = 0.08
+height = 0.1
+radial_segments = 4
+
+[node name="ProjectileLaucher" type="Node3D"]
+script = ExtResource("1_3fqvw")
+cooldown = 0.75
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.0498576)
+visible = false
+mesh = SubResource("CylinderMesh_3fqvw")

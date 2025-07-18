@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt0vtbsuhgng5"]
+
+[ext_resource type="Script" uid="uid://dataapbtetyeo" path="res://test/script/test_projectile_raycats.gd" id="1_vpdx4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpdx4"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_86783"]
+material = SubResource("StandardMaterial3D_vpdx4")
+radius = 0.06
+height = 0.12
+radial_segments = 12
+rings = 6
+
+[node name="Projectile" type="RayCast3D"]
+top_level = true
+script = ExtResource("1_vpdx4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_86783")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="cleanup"]

@@ -1,0 +1,1107 @@
+[gd_scene load_steps=89 format=3 uid="uid://c0g502b8l4hdg"]
+
+[ext_resource type="Script" uid="uid://cmjntqlamtvtc" path="res://test/script/camera_light.gd" id="1_ggm81"]
+[ext_resource type="Environment" uid="uid://hswc4kkifcx3" path="res://test/materials/e_grey_1.tres" id="2_v3c05"]
+[ext_resource type="Script" uid="uid://c3rv3kdxxds4m" path="res://test/script/ship_aim_rotation.gd" id="3_c6h2f"]
+[ext_resource type="Material" uid="uid://c35oiryb41tlu" path="res://test/materials/m_drift.tres" id="4_fol0w"]
+[ext_resource type="Material" uid="uid://cv5bvtqqf1mus" path="res://test/materials/Ship_Pear.tres" id="5_5n78c"]
+[ext_resource type="ArrayMesh" uid="uid://bmn8v1tmokcxq" path="res://assets/placeholder/player/placeholder_ship_pear.obj" id="6_37oq8"]
+[ext_resource type="Material" uid="uid://b3contyvswf7c" path="res://test/materials/mat_test_glass.tres" id="7_ceevc"]
+[ext_resource type="ArrayMesh" uid="uid://deinwhlbqylhj" path="res://assets/placeholder/player/placeholder_ship_pear_glass.obj" id="8_jh0dh"]
+[ext_resource type="Texture2D" uid="uid://bkebk4gt17ajr" path="res://assets/palette/lospec500-8x.png" id="9_0if3r"]
+[ext_resource type="ArrayMesh" uid="uid://ct6konstoom8q" path="res://assets/placeholder/player/placeholder_seat.obj" id="10_n7nhu"]
+[ext_resource type="ArrayMesh" uid="uid://dvcow2oq67qd4" path="res://assets/placeholder/player/placeholder_pear_arm.obj" id="11_cxl7g"]
+[ext_resource type="Script" uid="uid://dgfpyqx7sdrb6" path="res://test/script/targets_ring.gd" id="12_jdh15"]
+[ext_resource type="Texture2D" uid="uid://b81sl2np08005" path="res://test/materials/rainbow.tres" id="13_taggk"]
+[ext_resource type="Script" uid="uid://cas0ttyc3lrth" path="res://test/script/ship_raycast_script.gd" id="14_apmoo"]
+[ext_resource type="Script" uid="uid://5bvcqlmedb02" path="res://test/script/raycast_wheel.gd" id="15_ym1a7"]
+[ext_resource type="Curve" uid="uid://m2h2am2jfkci" path="res://test/materials/grip_curve_test.tres" id="16_kaatf"]
+[ext_resource type="Material" uid="uid://doxb08b53fndi" path="res://test/materials/test_ship_mat.tres" id="17_tg0qf"]
+[ext_resource type="ArrayMesh" uid="uid://vlyrgg41lxoe" path="res://assets/placeholder/player/placeholder_pear_leg.obj" id="18_ks4tp"]
+[ext_resource type="Material" uid="uid://84g2nc27v1y" path="res://test/materials/m_engine_on.tres" id="19_kbu1u"]
+[ext_resource type="Material" uid="uid://51t0vpmk4p1s" path="res://test/materials/m_trail.tres" id="20_he32y"]
+[ext_resource type="Material" uid="uid://bix2ojrvgpgi0" path="res://test/materials/mat_cloud_belt.tres" id="21_qavq3"]
+[ext_resource type="Material" uid="uid://c8nbgylh6wuin" path="res://test/materials/test.tres" id="22_f00so"]
+[ext_resource type="Theme" uid="uid://gn116784ml00" path="res://themes/theme_test.tres" id="23_8s3ms"]
+[ext_resource type="LabelSettings" uid="uid://dmhkv2mxb543k" path="res://themes/label_settings_title_test.tres" id="24_ea8gp"]
+[ext_resource type="FontFile" uid="uid://ij4ls717iyeg" path="res://assets/font/bianzhidai_noBG-Base.otf" id="25_o5774"]
+[ext_resource type="LabelSettings" uid="uid://7ncm22be7akl" path="res://themes/label_settings_test.tres" id="26_pkp1p"]
+[ext_resource type="AudioStream" uid="uid://cnrbfcya0l2xn" path="res://assets/music/MoonBoom_Chiptune_a_1_loop.ogg" id="27_mbvha"]
+[ext_resource type="PackedScene" uid="uid://hx4i3wwk0h7p" path="res://test/scenes/projectile_laucher.tscn" id="28_v3c05"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_03tek"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_vyx0x"]
+_data = [Vector2(0.242647, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7f20c"]
+curve = SubResource("Curve_vyx0x")
+
+[sub_resource type="Curve" id="Curve_vioa0"]
+_data = [Vector2(0, 1), 0.0, 0.0818619, 0, 0, Vector2(0.536765, 0.494382), -2.67416, -2.67416, 0, 0, Vector2(1, 0), -0.0407491, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vyx0x"]
+curve = SubResource("Curve_vioa0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xfr2n"]
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_7f20c")
+emission_curve = SubResource("CurveTexture_vyx0x")
+
+[sub_resource type="Curve" id="Curve_7f20c"]
+_data = [Vector2(0, 0), 0.0, 3.5236, 0, 0, Vector2(0.511905, 0.516854), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.56554, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_vioa0"]
+material = ExtResource("4_fol0w")
+curve = SubResource("Curve_7f20c")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7a0fn"]
+noise_type = 5
+frequency = 1.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_36aek"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_7a0fn")
+
+[sub_resource type="Gradient" id="Gradient_gvhor"]
+offsets = PackedFloat32Array(0.95082, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ur7o5"]
+noise_type = 5
+frequency = 1.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_frurw"]
+color_ramp = SubResource("Gradient_gvhor")
+noise = SubResource("FastNoiseLite_ur7o5")
+
+[sub_resource type="Gradient" id="Gradient_f4ds0"]
+offsets = PackedFloat32Array(0, 0.111111, 0.261905, 0.492063, 0.698413, 0.880952, 1)
+colors = PackedColorArray(0.403922, 0.321569, 0.635294, 1, 0.67451, 0.211765, 0.47451, 1, 0.941176, 0.317647, 0.462745, 1, 0.941176, 0.564706, 0.215686, 1, 0.368627, 0.733333, 0.341176, 1, 0.0627451, 0.533333, 0.764706, 1, 0.403922, 0.321569, 0.635294, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p3oii"]
+gradient = SubResource("Gradient_f4ds0")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+repeat = 2
+
+[sub_resource type="Gradient" id="Gradient_8uusj"]
+offsets = PackedFloat32Array(0, 0.15873)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hhoxu"]
+noise_type = 5
+frequency = 1.0
+fractal_lacunarity = 2.445
+fractal_gain = 0.2
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2a4va"]
+invert = true
+seamless = true
+color_ramp = SubResource("Gradient_8uusj")
+noise = SubResource("FastNoiseLite_hhoxu")
+
+[sub_resource type="Gradient" id="Gradient_sbpbe"]
+offsets = PackedFloat32Array(0.948276, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g65km"]
+noise_type = 5
+frequency = 0.05
+fractal_lacunarity = 0.55
+fractal_gain = 1.3
+fractal_weighted_strength = 1.0
+domain_warp_enabled = true
+domain_warp_type = 2
+domain_warp_frequency = 22.015
+domain_warp_fractal_gain = 3.265
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6kgsm"]
+invert = true
+seamless = true
+color_ramp = SubResource("Gradient_sbpbe")
+noise = SubResource("FastNoiseLite_g65km")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfr2n"]
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("9_0if3r")
+metallic_texture = SubResource("NoiseTexture2D_2a4va")
+roughness = 0.0
+roughness_texture = SubResource("NoiseTexture2D_6kgsm")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.1
+emission_operator = 1
+emission_texture = SubResource("GradientTexture2D_p3oii")
+rim_enabled = true
+clearcoat = 0.01
+clearcoat_roughness = 1.0
+clearcoat_texture = SubResource("NoiseTexture2D_36aek")
+anisotropy = 1.0
+heightmap_scale = 16.0
+subsurf_scatter_strength = 1.0
+subsurf_scatter_skin_mode = true
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+detail_mask = SubResource("NoiseTexture2D_frurw")
+detail_blend_mode = 1
+disable_receive_shadows = true
+grow_amount = 0.29
+
+[sub_resource type="Animation" id="Animation_vyx0x"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:z")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CORE_PIVOT:rotation:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CORE_PIVOT:rotation:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CORE_PIVOT:rotation:z")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_vioa0"]
+resource_name = "a_arms_idle"
+length = 2.0
+loop_mode = 1
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3),
+"points": PackedFloat32Array(0, -0.483333, -0.000147476, 0.483333, 0.000147476, 0.000147476, -0.3, 0.0112082, 0.3, -0.0112082, 0, -0.250002, -0.000737379, 0.250002, 0.000737379),
+"times": PackedFloat32Array(0, 1, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3),
+"points": PackedFloat32Array(0, -0.516667, -0.000147476, 0.516667, 0.000147476, 0.000737379, -0.25, -0.012388, 0.25, 0.012388, 0, -0.5, -0.000442428, 0.5, 0.000442428),
+"times": PackedFloat32Array(0, 1, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(3, 3),
+"points": PackedFloat32Array(0, -0.5, -0.0296427, 0.5, 0.0296427, 0, -0.500002, -0.0278729, 0.500002, 0.0278729),
+"times": PackedFloat32Array(0, 2)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3),
+"points": PackedFloat32Array(0, -0.333333, -0.0505842, 0.333333, 0.0505842, 0.000147476, -0.316667, 0.0315598, 0.316667, -0.0315598, 0, -0.383333, -0.0502893, 0.383333, 0.0502893),
+"times": PackedFloat32Array(0, 1.16667, 2)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.0446852, -0.417971, -0.0637096, 0.417971, 0.0637096, -0.000147476, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.6, 2)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(3),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3),
+"points": PackedFloat32Array(-0.000442428, -0.333333, 0.0492569, 0.333333, -0.0492569, -0.000147476, -0.233333, -0.0197618, 0.233333, 0.0197618, -0.000442428, -0.333333, 0.0513216, 0.333333, -0.0513216),
+"times": PackedFloat32Array(0, 0.783333, 2)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 3, 0),
+"points": PackedFloat32Array(-0.000147475, -0.25, 0, 0.25, 0, -0.0414407, -0.342176, 0.0578105, 0.342176, -0.0578105, 0.000147476, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.583333, 2)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:z")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(1.67853)
+}
+
+[sub_resource type="Animation" id="Animation_7f20c"]
+resource_name = "a_punch_cyclone"
+length = 2.0
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CORE_PIVOT:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.00191719, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CORE_PIVOT:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3, 3, 3),
+"points": PackedFloat32Array(0, -0.641667, 0.0138887, 0.641667, -0.0138887, 0.0138891, -0.0833333, -1.94444, 0.0833333, 1.94444, 6.625, -0.216667, -2.05556, 0.216667, 2.05556, 7.48611, -0.0666666, 0.861111, 0.0666666, -0.861111, 6.3, -0.295833, 0.0194445, 0.295833, -0.0194445),
+"times": PackedFloat32Array(0, 0.716667, 1.18333, 1.61667, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CORE_PIVOT:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3, 0),
+"points": PackedFloat32Array(0, -0.25, -0.0138916, 0.25, 0.0138916, -0.0416635, -0.183333, -0.972222, 0.183333, 0.972222, 0.375003, -0.266667, 0.888889, 0.266667, -0.888889, 0.0446852, -0.417971, -0.0637096, 0.417971, 0.0637096),
+"times": PackedFloat32Array(0, 0.483333, 1.28333, 2)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.000442428, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(2)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(3, 3, 3, 3),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.013892, -0.166667, 1.11111, 0.166667, -1.11111, -0.430552, -0.233333, -1.30556, 0.233333, 1.30556, -0.000147475, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.05, 0.483333, 1.28333, 2)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R:rotation:z")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(2)
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(3, 3, 0, 3, 3),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -0.0694413, -0.116667, 0, 0.116667, 0, -1.34722, -0.25, 0, 0.25, 0, -0.374997, -0.15, -1, 0.15, 1, 0.000200146, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.05, 0.466667, 0.8, 1.61667, 2)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(2)
+}
+tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CORE_PIVOT/SHOULDER_PIVOT:rotation:z")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7f20c"]
+_data = {
+&"RESET": SubResource("Animation_vyx0x"),
+&"a_arms_idle": SubResource("Animation_vioa0"),
+&"a_punch_cyclone": SubResource("Animation_7f20c")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8wcqj"]
+radius = 1.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l7vdf"]
+blend_mode = 4
+cull_mode = 2
+specular_mode = 1
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+albedo_texture = ExtResource("13_taggk")
+emission_enabled = true
+emission = Color(0.190762, 0.190762, 0.190762, 1)
+emission_energy_multiplier = 0.8
+emission_texture = ExtResource("13_taggk")
+rim_enabled = true
+rim_tint = 0.0
+backlight_enabled = true
+backlight = Color(0.0177324, 0.0177324, 0.0177324, 1)
+disable_receive_shadows = true
+proximity_fade_distance = 238.83
+distance_fade_mode = 2
+distance_fade_min_distance = 30.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_l3rq6"]
+material = SubResource("StandardMaterial3D_l7vdf")
+inner_radius = 3.0
+outer_radius = 3.5
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_offa6"]
+friction = 0.0
+
+[sub_resource type="Curve" id="Curve_l3rq6"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 0.7), -0.369961, -0.369961, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_enabled = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_offa6"]
+radius = 1.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vd4mf"]
+material = ExtResource("17_tg0qf")
+radius = 0.25
+height = 0.75
+radial_segments = 12
+
+[sub_resource type="Curve" id="Curve_kjbjw"]
+_data = [Vector2(0, 0.0224719), 0.0, 1.73663, 0, 0, Vector2(0.494048, 0.494382), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.70787, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_gif24"]
+material = ExtResource("19_kbu1u")
+curve = SubResource("Curve_kjbjw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xcafd"]
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_7f20c")
+emission_curve = SubResource("CurveTexture_vyx0x")
+
+[sub_resource type="Curve" id="Curve_gif24"]
+_data = [Vector2(0, 0), 0.0, 1.27872, 0, 0, Vector2(0.511905, 0.393258), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.25843, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_0ejod"]
+material = ExtResource("20_he32y")
+curve = SubResource("Curve_gif24")
+
+[sub_resource type="TorusMesh" id="TorusMesh_cn81f"]
+material = ExtResource("21_qavq3")
+inner_radius = 45.0
+outer_radius = 40.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_6d8iw"]
+material = ExtResource("21_qavq3")
+inner_radius = 24.055
+outer_radius = 28.704
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l3rq6"]
+radius = 4.08123
+
+[sub_resource type="TorusMesh" id="TorusMesh_7yo6o"]
+material = ExtResource("21_qavq3")
+inner_radius = 5.117
+outer_radius = 10.23
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2taud"]
+material = ExtResource("22_f00so")
+radius = 4.0
+height = 8.0
+rings = 12
+
+[sub_resource type="SphereMesh" id="SphereMesh_7yo6o"]
+material = ExtResource("22_f00so")
+radial_segments = 32
+rings = 12
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l3rq6"]
+friction = 0.01
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b612w"]
+size = Vector3(10000, 1, 10000)
+
+[sub_resource type="Gradient" id="Gradient_figqx"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7f3sn"]
+noise_type = 2
+frequency = 0.04
+fractal_octaves = 1
+cellular_distance_function = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7f20c"]
+width = 1024
+height = 1024
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.239
+color_ramp = SubResource("Gradient_figqx")
+noise = SubResource("FastNoiseLite_7f3sn")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vioa0"]
+width = 1024
+height = 1024
+invert = true
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.4
+color_ramp = SubResource("Gradient_figqx")
+noise = SubResource("FastNoiseLite_7f3sn")
+
+[sub_resource type="Curve" id="Curve_0ejod"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.506579, 0.146067), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ybk8g"]
+curve = SubResource("Curve_0ejod")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vyx0x"]
+width = 1024
+height = 1024
+invert = true
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.4
+color_ramp = SubResource("Gradient_figqx")
+noise = SubResource("FastNoiseLite_7f3sn")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b612w"]
+transparency = 1
+blend_mode = 1
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("NoiseTexture2D_7f20c")
+roughness = 0.01
+roughness_texture = SubResource("NoiseTexture2D_vyx0x")
+detail_mask = SubResource("CurveTexture_ybk8g")
+detail_blend_mode = 3
+detail_albedo = SubResource("NoiseTexture2D_vioa0")
+proximity_fade_distance = 10.0
+distance_fade_mode = 2
+distance_fade_min_distance = 120.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2taud"]
+material = SubResource("StandardMaterial3D_b612w")
+size = Vector2(2000, 2000)
+subdivide_width = 10
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vioa0"]
+blend_mode = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wcqj"]
+line_spacing = -8.0
+font = ExtResource("25_o5774")
+font_size = 48
+font_color = Color(0.172549, 0.121569, 0.192157, 1)
+shadow_size = 0
+shadow_color = Color(0.690196, 0.654902, 0.721569, 1)
+shadow_offset = Vector2(1.2, 0.2)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3c05"]
+friction = 0.0
+bounce = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c6h2f"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v3c05"]
+radial_segments = 5
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera_Light" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_ggm81")
+player = NodePath("../SHIP_RAYCAST")
+
+[node name="CAMERA_PIVOT" type="Node3D" parent="Camera_Light"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="CAMERA" type="Camera3D" parent="Camera_Light/CAMERA_PIVOT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+environment = ExtResource("2_v3c05")
+projection = 1
+current = true
+size = 24.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera_Light"]
+transform = Transform3D(0.995697, -0.00579606, -0.0924846, 0.0833139, 0.492926, 0.866073, 0.0405683, -0.870052, 0.491288, -5.9867, 66.3479, 16.4024)
+light_energy = 4.0
+light_size = 1.0
+shadow_enabled = true
+shadow_bias = 1.25
+shadow_normal_bias = 10.0
+shadow_blur = 10.0
+spot_range = 1000.0
+spot_angle_attenuation = 0.594604
+
+[node name="SHIP_AIM_ROTATION" type="RigidBody3D" parent="." node_paths=PackedStringArray("engine", "camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_03tek")
+script = ExtResource("3_c6h2f")
+engine = NodePath("../SHIP_RAYCAST")
+camera = NodePath("../Camera_Light/CAMERA_PIVOT/CAMERA")
+
+[node name="AIM_PIVOT" type="Node3D" parent="SHIP_AIM_ROTATION"]
+unique_name_in_owner = true
+
+[node name="ProjectileLaucher" parent="SHIP_AIM_ROTATION/AIM_PIVOT" instance=ExtResource("28_v3c05")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.65454)
+
+[node name="GPUParticles3DRL2" type="GPUParticles3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.085, 1.27)
+visible = false
+amount = 120
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
+
+[node name="PlaceholderShipPear" type="MeshInstance3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = ExtResource("5_5n78c")
+mesh = ExtResource("6_37oq8")
+skeleton = NodePath("../..")
+
+[node name="PlaceholderShipPearGlass" type="MeshInstance3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = ExtResource("7_ceevc")
+cast_shadow = 2
+mesh = ExtResource("8_jh0dh")
+skeleton = NodePath("../..")
+
+[node name="PlaceholderSeat" type="MeshInstance3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_xfr2n")
+mesh = ExtResource("10_n7nhu")
+skeleton = NodePath("../../..")
+
+[node name="CORE_PIVOT" type="Node3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+
+[node name="SHOULDER_PIVOT" type="Node3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT/CORE_PIVOT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.40418e-10, 0, 0.75)
+
+[node name="ELBOW_L" type="Node3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT/CORE_PIVOT/SHOULDER_PIVOT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, -0.25)
+
+[node name="PlaceholderPearArm_L" type="MeshInstance3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT/CORE_PIVOT/SHOULDER_PIVOT/ELBOW_L"]
+transform = Transform3D(1, 8.74228e-08, 0, -4.37114e-08, 0.5, 0.866025, -7.57104e-08, 0.866025, -0.5, 0, -0.25, 0)
+material_override = ExtResource("5_5n78c")
+mesh = ExtResource("11_cxl7g")
+skeleton = NodePath("../../../../../../SHIP_RAYCAST/WHEEL_RR")
+
+[node name="ELBOW_R" type="Node3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT/CORE_PIVOT/SHOULDER_PIVOT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, -0.25)
+
+[node name="PlaceholderPearArm_R" type="MeshInstance3D" parent="SHIP_AIM_ROTATION/AIM_PIVOT/CORE_PIVOT/SHOULDER_PIVOT/ELBOW_R"]
+transform = Transform3D(-1, 7.57103e-08, -4.37114e-08, 0, 0.5, 0.866025, 8.74228e-08, 0.866025, -0.5, 0, -0.25, 0)
+material_override = ExtResource("5_5n78c")
+mesh = ExtResource("11_cxl7g")
+skeleton = NodePath("../../../../../../SHIP_RAYCAST")
+
+[node name="anim_arms" type="AnimationPlayer" parent="SHIP_AIM_ROTATION/AIM_PIVOT"]
+libraries = {
+&"": SubResource("AnimationLibrary_7f20c")
+}
+autoplay = "a_arms_idle"
+
+[node name="COLLISION_SPHERE" type="CollisionShape3D" parent="SHIP_AIM_ROTATION"]
+transform = Transform3D(1, 3.91338e-35, 1.18275e-11, 0, 1, -3.30872e-24, -1.18275e-11, 3.30872e-24, 1, 0, 0, 0)
+shape = SubResource("SphereShape3D_8wcqj")
+
+[node name="TARGETS_RING" type="Node3D" parent="." node_paths=PackedStringArray("engine")]
+script = ExtResource("12_jdh15")
+engine = NodePath("../SHIP_RAYCAST")
+
+[node name="RAINBOW_RING" type="MeshInstance3D" parent="TARGETS_RING"]
+mesh = SubResource("TorusMesh_l3rq6")
+skeleton = NodePath("../..")
+
+[node name="SHIP_RAYCAST" type="RigidBody3D" parent="." node_paths=PackedStringArray("wheels")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mass = 60.0
+physics_material_override = SubResource("PhysicsMaterial_offa6")
+script = ExtResource("14_apmoo")
+wheels = [NodePath("WHEEL_FL"), NodePath("WHEEL_FR"), NodePath("WHEEL_RL"), NodePath("WHEEL_RR")]
+accel_curve = SubResource("Curve_l3rq6")
+
+[node name="COLLISION_CYCLINDER" type="CollisionShape3D" parent="SHIP_RAYCAST"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
+visible = false
+shape = SubResource("CylinderShape3D_offa6")
+
+[node name="WHEEL_FL" type="RayCast3D" parent="SHIP_RAYCAST"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+enabled = false
+script = ExtResource("15_ym1a7")
+grip_curve = ExtResource("16_kaatf")
+
+[node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FL"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, -0.494475, 0.00552487)
+material_override = ExtResource("17_tg0qf")
+mesh = SubResource("CapsuleMesh_vd4mf")
+
+[node name="PlaceholderPearLeg_L" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FL/WHEEL"]
+transform = Transform3D(-1.5, -1.54618e-07, -2.18776e-07, -9.27258e-08, 1.44889, -0.388228, 2.5134e-07, -0.388228, -1.44889, 0.25, -0.75, 0.5)
+material_override = ExtResource("5_5n78c")
+mesh = ExtResource("18_ks4tp")
+skeleton = NodePath("../../../WHEEL_RR")
+
+[node name="WHEEL_FR" type="RayCast3D" parent="SHIP_RAYCAST"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+enabled = false
+script = ExtResource("15_ym1a7")
+grip_curve = ExtResource("16_kaatf")
+
+[node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FR"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, -0.5, 0)
+material_override = ExtResource("17_tg0qf")
+mesh = SubResource("CapsuleMesh_vd4mf")
+
+[node name="PlaceholderPearLeg_R" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_FR/WHEEL"]
+transform = Transform3D(-1.5, 1.54618e-07, 2.18776e-07, 9.27258e-08, 1.44889, -0.388228, -2.5134e-07, -0.388228, -1.44889, -0.25, -0.75, 0.5)
+material_override = ExtResource("5_5n78c")
+mesh = ExtResource("18_ks4tp")
+skeleton = NodePath("../../../WHEEL_RR")
+
+[node name="WHEEL_RL" type="RayCast3D" parent="SHIP_RAYCAST"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+enabled = false
+script = ExtResource("15_ym1a7")
+wheel_radius = 0.75
+is_motor = true
+grip_curve = ExtResource("16_kaatf")
+
+[node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_RL"]
+transform = Transform3D(1.5, 0, 0, 0, 1.06066, 1.06066, 0, -1.06066, 1.06066, 0, -0.5, 0)
+mesh = SubResource("CapsuleMesh_vd4mf")
+
+[node name="GPUParticles3DDRIFTL" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RL/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, 0.166667, -0.635713, -0.494292)
+emitting = false
+amount = 120
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
+
+[node name="GPUParticles3DENGINEL" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RL/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, 0.15, -0.765895, -0.360895)
+emitting = false
+amount = 120
+lifetime = 0.02
+preprocess = 0.01
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_gif24")
+
+[node name="GPUParticles3DTRAILL" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RL/WHEEL"]
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, 0.167, -0.636, -0.494)
+amount = 120
+lifetime = 0.25
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xcafd")
+draw_pass_1 = SubResource("RibbonTrailMesh_0ejod")
+
+[node name="WHEEL_RR" type="RayCast3D" parent="SHIP_RAYCAST"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+enabled = false
+script = ExtResource("15_ym1a7")
+wheel_radius = 0.75
+is_motor = true
+grip_curve = ExtResource("16_kaatf")
+
+[node name="WHEEL" type="MeshInstance3D" parent="SHIP_RAYCAST/WHEEL_RR"]
+transform = Transform3D(1.5, 0, 0, 0, 1.06066, 1.06066, 0, -1.06066, 1.06066, 0, -0.5, 0)
+material_override = ExtResource("17_tg0qf")
+mesh = SubResource("CapsuleMesh_vd4mf")
+
+[node name="GPUParticles3DDRIFTR" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RR/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, -0.167, -0.635895, -0.493895)
+emitting = false
+amount = 120
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
+
+[node name="GPUParticles3DENGINER" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RR/WHEEL"]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, -0.15, -0.765895, -0.360895)
+emitting = false
+amount = 120
+lifetime = 0.02
+preprocess = 0.01
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xfr2n")
+draw_pass_1 = SubResource("RibbonTrailMesh_gif24")
+
+[node name="GPUParticles3DTRAILR" type="GPUParticles3D" parent="SHIP_RAYCAST/WHEEL_RR/WHEEL"]
+transform = Transform3D(0.666667, 0, 0, 0, 0.471405, 0.471405, 0, -0.471405, 0.471405, -0.167, -0.636, -0.494)
+amount = 120
+lifetime = 0.4
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_xcafd")
+draw_pass_1 = SubResource("RibbonTrailMesh_0ejod")
+
+[node name="ASTEROIDStaticBody3D" type="StaticBody3D" parent="."]
+process_priority = -1
+process_physics_priority = -1
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 14, -25, 0)
+
+[node name="RING" type="MeshInstance3D" parent="ASTEROIDStaticBody3D"]
+transform = Transform3D(0.99861, -0.000978024, -0.052763, 0.00166854, 0.999914, 0.0130485, 0.0527457, -0.0131185, 0.998522, -0.00563335, -0.0574737, -0.0133209)
+mesh = SubResource("TorusMesh_cn81f")
+skeleton = NodePath("../CollisionShape3D/BELT 1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ASTEROIDStaticBody3D/RING"]
+transform = Transform3D(0.988105, -0.147964, 0.0418922, 0.149396, 0.988212, -0.0334176, -0.0364537, 0.0392787, 0.998564, -0.0438871, -0.0121064, -0.0125175)
+mesh = SubResource("TorusMesh_6d8iw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ASTEROIDStaticBody3D"]
+transform = Transform3D(1, 0, 0, -5.96046e-08, 1, 0, -1.49012e-08, 0, 1, 0, 0, 0)
+shape = SubResource("SphereShape3D_l3rq6")
+
+[node name="BELT 1" type="MeshInstance3D" parent="ASTEROIDStaticBody3D/CollisionShape3D"]
+transform = Transform3D(0.982035, 0.188701, 7.45058e-09, -0.182271, 0.948572, 0.258819, 0.0488394, -0.254169, 0.965926, 0, 0, 0)
+mesh = SubResource("TorusMesh_7yo6o")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ASTEROIDStaticBody3D/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, -2.13163e-14, 0.550976, 0.834521, 0, -0.834521, 0.550976, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2taud")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ASTEROIDStaticBody3D"]
+transform = Transform3D(-0.7049, -0.0352783, -0.708429, 0.529237, 0.638814, -0.558412, 0.472254, -0.768552, -0.43163, -9.96599, 3.18172, 0)
+mesh = SubResource("SphereMesh_7yo6o")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ASTEROIDStaticBody3D"]
+transform = Transform3D(-0.942334, -0.0352783, 0.332809, -0.277363, 0.638814, -0.717625, -0.187286, -0.768552, -0.611762, -0.0661273, 0.896233, 10.8875)
+mesh = SubResource("SphereMesh_7yo6o")
+
+[node name="FLOOR" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_l3rq6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FLOOR"]
+shape = SubResource("BoxShape3D_b612w")
+
+[node name="FAR CLOUDS" type="MeshInstance3D" parent="FLOOR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -31.7412, 0)
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("PlaneMesh_2taud")
+skeleton = NodePath("../..")
+
+[node name="Control" type="Control" parent="."]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_vioa0")
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("23_8s3ms")
+
+[node name="TITLE" type="Label" parent="Control"]
+use_parent_material = true
+layout_mode = 0
+offset_left = -543.0
+offset_top = -289.0
+offset_right = -379.0
+offset_bottom = -200.667
+text = "MOON
+BOOM"
+label_settings = ExtResource("24_ea8gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SHADOW" type="Label" parent="Control"]
+z_index = -1
+use_parent_material = true
+layout_mode = 0
+offset_left = -539.0
+offset_top = -289.0
+offset_right = -375.0
+offset_bottom = -200.667
+text = "MOON
+BOOM"
+label_settings = SubResource("LabelSettings_8wcqj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="subtext" type="Label" parent="Control"]
+visible = false
+layout_mode = 0
+offset_left = -538.0
+offset_top = 250.0
+offset_right = -365.0
+offset_bottom = 328.5
+text = "dreamy
+dithering
+space fog"
+label_settings = ExtResource("26_pkp1p")
+vertical_alignment = 1
+
+[node name="ALPHA" type="Label" parent="Control"]
+use_parent_material = true
+layout_mode = 0
+offset_left = -538.0
+offset_top = -198.0
+offset_right = -365.0
+offset_bottom = -172.0
+text = "pre-alpha"
+label_settings = ExtResource("26_pkp1p")
+vertical_alignment = 1
+
+[node name="Lospec500-8x" type="Sprite2D" parent="Control"]
+position = Vector2(-434, -319)
+texture = ExtResource("9_0if3r")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_mbvha")
+volume_db = -10.0
+parameters/looping = true
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0192432, -6.91373)
+physics_material_override = SubResource("PhysicsMaterial_v3c05")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_c6h2f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_v3c05")
