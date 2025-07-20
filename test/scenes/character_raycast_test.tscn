@@ -832,9 +832,9 @@ autoplay = "a_arms_idle"
 transform = Transform3D(1, 3.91338e-35, 1.18275e-11, 0, 1, -3.30872e-24, -1.18275e-11, 3.30872e-24, 1, 0, 0, 0)
 shape = SubResource("SphereShape3D_8wcqj")
 
-[node name="TARGETS_RING" type="Node3D" parent="." node_paths=PackedStringArray("engine")]
+[node name="TARGETS_RING" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("12_jdh15")
-engine = NodePath("../SHIP_RAYCAST")
+player = NodePath("../SHIP_RAYCAST")
 
 [node name="RAINBOW_RING" type="MeshInstance3D" parent="TARGETS_RING"]
 mesh = SubResource("TorusMesh_l3rq6")
@@ -842,7 +842,7 @@ skeleton = NodePath("../..")
 
 [node name="SHIP_RAYCAST" type="RigidBody3D" parent="." node_paths=PackedStringArray("wheels")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-mass = 60.0
+mass = 120.0
 physics_material_override = SubResource("PhysicsMaterial_offa6")
 script = ExtResource("14_apmoo")
 wheels = [NodePath("WHEEL_FL"), NodePath("WHEEL_FR"), NodePath("WHEEL_RL"), NodePath("WHEEL_RR")]
@@ -850,7 +850,6 @@ accel_curve = SubResource("Curve_l3rq6")
 
 [node name="COLLISION_CYCLINDER" type="CollisionShape3D" parent="SHIP_RAYCAST"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
-visible = false
 shape = SubResource("CylinderShape3D_offa6")
 
 [node name="WHEEL_FL" type="RayCast3D" parent="SHIP_RAYCAST"]

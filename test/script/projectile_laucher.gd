@@ -18,8 +18,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_player_s_shoot() -> void:
 	trigger_held = true
-	print("trigger held")
+	#print("trigger held")
 	
 func _on_player_s_shoot_stop() -> void:
 	trigger_held = false
-	print("trigger released")
+	#print("trigger released")

@@ -6,8 +6,26 @@ extends Node3D
 @onready var particle_engine_l = %PARTICLES_ENGINE_L
 
 @onready var anim_arms = %ANIM_ARMS
+@onready var anim_legs = %ANIM_LEGS
+
+var burst_held := false
+var drift_held := false
 
 # INPUTS RECEIVER
+
+func _physics_process(delta: float) -> void:
+	if burst_held:
+		burst_active()
+		print("burst")
+	elif drift_held:
+		drift_active()
+		print("drift")
+	else:
+		anim_legs.play("a_legs_idle")
+		particle_engine_l.emitting = false
+		particle_engine_r.emitting = false
+		particle_drift_l.emitting = false
+		particle_drift_r.emitting = false
 
 func _on_player_s_shoot() -> void:
 	anim_arms.play("a_arms_idle")
@@ -15,7 +33,30 @@ func _on_player_s_shoot() -> void:
 
 func _on_player_s_special() -> void:
 	anim_arms.play("a_punch_cyclone")
-	print("s_special")
+	#print("s_special")
+
+func _on_player_s_burst() -> void:
+	burst_held = true
+
+func _on_player_s_burst_stop() -> void:
+	burst_held = false
+
+func _on_player_s_drift() -> void:
+	drift_held = true
+
+func _on_player_s_drift_stop() -> void:
+	drift_held = false
+
+func burst_active():
+	particle_engine_l.emitting = true
+	particle_engine_r.emitting = true
+	anim_legs.play("a_legs_burst")
+
+func drift_active():
+	particle_drift_l.emitting = true
+	particle_drift_r.emitting = true
+	anim_legs.play("a_legs_burst")
+
 
 
 # PREVIOUS RAY CAST FOR REF

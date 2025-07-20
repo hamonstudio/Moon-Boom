@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=11 format=3 uid="uid://84g2nc27v1y"]
+[gd_resource type="StandardMaterial3D" load_steps=11 format=3 uid="uid://bnjj46h8dt5sh"]
 
 [sub_resource type="Gradient" id="Gradient_gif24"]
 offsets = PackedFloat32Array(0, 0.111111, 0.261905, 0.492063, 0.698413, 0.880952, 1)
@@ -56,7 +56,6 @@ metallic_specular = 0.0
 roughness = 0.0
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 4.0
 emission_texture = SubResource("GradientTexture2D_lqeva")
 rim_tint = 0.0
 clearcoat = 0.01
@@ -72,8 +71,7 @@ detail_blend_mode = 1
 disable_receive_shadows = true
 shadow_to_opacity = true
 grow_amount = 16.0
-use_point_size = true
-point_size = 20.0
+point_size = 9.1
 distance_fade_mode = 2
 distance_fade_min_distance = 50.0
 distance_fade_max_distance = 0.0

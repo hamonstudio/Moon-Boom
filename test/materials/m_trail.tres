@@ -73,5 +73,5 @@ disable_receive_shadows = true
 shadow_to_opacity = true
 grow_amount = 0.29
 distance_fade_mode = 2
-distance_fade_min_distance = 22.0
+distance_fade_min_distance = 24.0
 distance_fade_max_distance = 0.0
