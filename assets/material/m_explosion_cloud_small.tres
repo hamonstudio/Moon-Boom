@@ -1,0 +1,15 @@
+[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://s86d7itbkvs"]
+
+[ext_resource type="Shader" uid="uid://c3obs4aftbi3n" path="res://test/materials/s_explosion_cloud.tres" id="1_nnmn1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f50rg"]
+render_priority = 0
+shader = ExtResource("1_nnmn1")
+shader_parameter/ColorParameter = Color(1, 0.329412, 0.180392, 1)
+
+[resource]
+material = SubResource("ShaderMaterial_f50rg")
+radius = 0.2
+height = 0.4
+radial_segments = 24
+rings = 24

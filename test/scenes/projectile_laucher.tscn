@@ -10,7 +10,6 @@ radial_segments = 4
 
 [node name="ProjectileLaucher" type="Node3D"]
 script = ExtResource("1_3fqvw")
-cooldown = 0.75
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dt0vtbsuhgng5"]
 
-[ext_resource type="Script" uid="uid://dataapbtetyeo" path="res://test/script/test_projectile_raycats.gd" id="1_vpdx4"]
+[ext_resource type="Script" uid="uid://dataapbtetyeo" path="res://test/script/projectile_raycats.gd" id="1_vpdx4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpdx4"]
 emission_enabled = true
@@ -22,7 +22,6 @@ script = ExtResource("1_vpdx4")
 mesh = SubResource("SphereMesh_86783")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.25
 one_shot = true
 autostart = true
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=91 format=3 uid="uid://74biasx8txxl"]
+[gd_scene load_steps=95 format=3 uid="uid://74biasx8txxl"]
 
 [ext_resource type="Script" uid="uid://cmjntqlamtvtc" path="res://test/script/camera_light.gd" id="1_yvaau"]
 [ext_resource type="Environment" uid="uid://hswc4kkifcx3" path="res://test/materials/e_grey_1.tres" id="2_uttsk"]
-[ext_resource type="Script" uid="uid://cakkcp6oykrpu" path="res://test/script/player_v03_dash.gd" id="3_7cgpx"]
+[ext_resource type="Script" uid="uid://p0plyjwk6051" path="res://test/script/player_v03_dash_cleanup.gd" id="3_uttsk"]
+[ext_resource type="Curve" uid="uid://bgbwvyg20ct3p" path="res://test/materials/acceleration_curve_test.tres" id="4_7cgpx"]
 [ext_resource type="Texture2D" uid="uid://b81sl2np08005" path="res://test/materials/rainbow.tres" id="4_f3cau"]
 [ext_resource type="Material" uid="uid://cv5bvtqqf1mus" path="res://test/materials/Ship_Pear.tres" id="5_f50rg"]
 [ext_resource type="ArrayMesh" uid="uid://vlyrgg41lxoe" path="res://assets/placeholder/player/placeholder_pear_leg.obj" id="6_4xaxr"]
@@ -20,16 +21,14 @@
 [ext_resource type="Material" uid="uid://bix2ojrvgpgi0" path="res://test/materials/mat_cloud_belt.tres" id="17_40mph"]
 [ext_resource type="Material" uid="uid://c8nbgylh6wuin" path="res://test/materials/test.tres" id="18_8jjiw"]
 [ext_resource type="Theme" uid="uid://gn116784ml00" path="res://themes/theme_test.tres" id="19_1v0qi"]
+[ext_resource type="Material" uid="uid://dhljlaq77m1fg" path="res://test/m_dummy.tres" id="19_f50rg"]
 [ext_resource type="LabelSettings" uid="uid://dmhkv2mxb543k" path="res://themes/label_settings_title_test.tres" id="20_y6gb3"]
 [ext_resource type="FontFile" uid="uid://ij4ls717iyeg" path="res://assets/font/bianzhidai_noBG-Base.otf" id="21_ng4e3"]
 [ext_resource type="LabelSettings" uid="uid://7ncm22be7akl" path="res://themes/label_settings_test.tres" id="22_sef3i"]
 [ext_resource type="AudioStream" uid="uid://cnrbfcya0l2xn" path="res://assets/music/MoonBoom_Chiptune_a_1_loop.ogg" id="23_by1ff"]
+[ext_resource type="SphereMesh" uid="uid://s86d7itbkvs" path="res://assets/material/m_explosion_cloud_small.tres" id="27_f50rg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pq0ss"]
-
-[sub_resource type="Curve" id="Curve_yvaau"]
-_data = [Vector2(0, 0.764045), 0.0, 0.0, 0, 0, Vector2(0.260638, 1), 0.0, 0.0, 0, 0, Vector2(0.760638, 0.505618), 0.0, 0.0, 0, 0, Vector2(1, 0.0898877), 0.0, 0.0, 0, 0]
-point_count = 4
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t2hm0"]
 radius = 1.5
@@ -706,6 +705,16 @@ _data = {
 &"a_punch_cyclone": SubResource("Animation_7f20c")
 }
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_f3cau"]
+top_radius = 3.0
+bottom_radius = 3.0
+height = 12.0
+radial_segments = 7
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f50rg"]
+height = 12.0
+radius = 3.0
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3c05"]
 friction = 0.0
 bounce = 0.5
@@ -715,6 +724,7 @@ height = 4.0
 radius = 1.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_v3c05"]
+material = ExtResource("19_f50rg")
 top_radius = 1.0
 bottom_radius = 1.0
 height = 4.0
@@ -869,14 +879,13 @@ shadow_blur = 10.0
 spot_range = 1000.0
 spot_angle_attenuation = 0.594604
 
-[node name="PLAYER" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera")]
+[node name="PLAYER" type="RigidBody3D" parent="."]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 mass = 120.0
 physics_material_override = SubResource("PhysicsMaterial_pq0ss")
-script = ExtResource("3_7cgpx")
-camera = NodePath("../Camera_Light/CAMERA_PIVOT/CAMERA")
-acc_curve = SubResource("Curve_yvaau")
+script = ExtResource("3_uttsk")
+acc_curve = ExtResource("4_7cgpx")
 
 [node name="COLLISION_SPHERE" type="CollisionShape3D" parent="PLAYER"]
 transform = Transform3D(1, 3.91338e-35, 1.18275e-11, 0, 1, -3.30872e-24, -1.18275e-11, 3.30872e-24, 1, 0, 2, 0)
@@ -938,7 +947,7 @@ draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
 unique_name_in_owner = true
 transform = Transform3D(0.692647, 0, 0.721277, -0.51002, 0.707107, 0.489775, -0.51002, -0.707107, 0.489775, 0, -1.75, 0.5)
 emitting = false
-amount = 60
+amount = 10
 lifetime = 0.1
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_xfr2n")
@@ -985,7 +994,7 @@ draw_pass_1 = SubResource("RibbonTrailMesh_vioa0")
 unique_name_in_owner = true
 transform = Transform3D(0.728359, 0, 0.685196, -0.484507, 0.707107, 0.515028, -0.484507, -0.707107, 0.515028, 0, -1.75, 0.5)
 emitting = false
-amount = 60
+amount = 10
 lifetime = 0.1
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_xfr2n")
@@ -1071,8 +1080,18 @@ libraries = {
 }
 autoplay = "a_arms_idle"
 
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.928434, 0, 0.371497, 0, 1, 0, -0.371497, 0, 0.928434, 10.1898, 0, 10.0036)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+material_override = ExtResource("19_f50rg")
+mesh = SubResource("CylinderMesh_f3cau")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("CylinderShape3D_f50rg")
+
 [node name="OBSTACLE DUMMY" type="AnimatableBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0192432, -6.91373)
+transform = Transform3D(0.849672, 0, -0.527312, 0, 1, 0, 0.527312, 0, 0.849672, 10.2608, 0.0192432, 13.1179)
 physics_material_override = SubResource("PhysicsMaterial_v3c05")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OBSTACLE DUMMY"]
@@ -1080,6 +1099,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("CylinderShape3D_c6h2f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="OBSTACLE DUMMY"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = ExtResource("19_f50rg")
+mesh = SubResource("CylinderMesh_v3c05")
+
+[node name="OBSTACLE DUMMY2" type="AnimatableBody3D" parent="."]
+transform = Transform3D(0.664918, 0, -0.746917, 0, 1, 0, 0.746917, 0, 0.664918, 12.3233, 0.0192432, 11.9494)
+physics_material_override = SubResource("PhysicsMaterial_v3c05")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OBSTACLE DUMMY2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_c6h2f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OBSTACLE DUMMY2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("CylinderMesh_v3c05")
+
+[node name="OBSTACLE DUMMY3" type="AnimatableBody3D" parent="."]
+transform = Transform3D(0.958621, 0, 0.284685, 0, 1, 0, -0.284685, 0, 0.958621, 7.66392, 0.0192432, 8.01973)
+physics_material_override = SubResource("PhysicsMaterial_v3c05")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OBSTACLE DUMMY3"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_c6h2f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OBSTACLE DUMMY3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("CylinderMesh_v3c05")
+
+[node name="OBSTACLE DUMMY4" type="AnimatableBody3D" parent="."]
+transform = Transform3D(0.958621, 0, 0.284685, 0, 1, 0, -0.284685, 0, 0.958621, 7.34958, 0.0192432, 10.9591)
+physics_material_override = SubResource("PhysicsMaterial_v3c05")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OBSTACLE DUMMY4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_c6h2f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OBSTACLE DUMMY4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 mesh = SubResource("CylinderMesh_v3c05")
 
@@ -1212,6 +1268,11 @@ texture = ExtResource("14_v1pb3")
 stream = ExtResource("23_by1ff")
 volume_db = -10.0
 parameters/looping = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91639, -5.44491)
+visible = false
+mesh = ExtResource("27_f50rg")
 
 [connection signal="s_shoot" from="PLAYER" to="PLAYER/CHARACTER" method="_on_player_s_shoot"]
 [connection signal="s_shoot" from="PLAYER" to="PLAYER/CHARACTER/COCKPIT/ProjectileLaucher" method="_on_player_s_shoot"]
